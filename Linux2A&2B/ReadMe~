@@ -1,0 +1,68 @@
+
+   By JIyuan@SJTU
+
+   |-------------------------------------------------------------------------|
+   |      LinuxKernel PROJECT2A                                              |
+   |-------------------------------------------------------------------------|
+   |      make                                                               |
+   |      sudo insmod hello.ko                                               |
+   |      dmesg                                                              |      
+   |      sudo rmmod hello.ko                                                |
+   |      dmesg                                                              |
+   |      ------------------------------------------                         |
+   |      make                                                               |
+   |      sudo insmod para.ko test=**                                        |
+   |      dmesg                                                              |
+   |      sudo rmmod para.ko                                                 |
+   |      dmesg                                                              |
+   |      ------------------------------------------                         |
+   |      make                                                               |
+   |      sudo insmod proc.ko                                                |
+   |      cat /proc/modules | grep proc                                      |
+   |      (you can find 'hello' file in the /proc.)                          |
+   |      dmesg                                                              |
+   |      sudo rmmod proc.ko                                                 |
+   |      dmesg                                                              |
+   |-------------------------------------------------------------------------|
+
+  
+
+
+   |-------------------------------------------------------------------------------------------------|
+   |      LinuxKernel PROJECT2B                                                                      |
+   |-------------------------------------------------------------------------------------------------|
+   |      ./block                                                                                    |
+   |      ps -e | grep block                                                                         |
+   |      cd /proc/**                                                                                |
+   |      cat ctx                                                                                    |
+   |      kill -9 **                                                                                           |
+   |-------------------------------------------------------------------------------------------------|
+   |      Implementing Steps:                                                                        |
+   |                                                                                                 |
+   |         1. add 'int ctx' into task_struct, in file '/include/linux/sched.h';                    |
+   |                                                                                                 |
+   |         2. inc 'task_struct->ctx', in function '__schedule', in file '/kernel/sched/core.c';    |
+   |                                                                                                 |
+   |         3. initiate 'task_struct->ctx=0', in function '_do_fork', in file '/kernel/fork.c';     |
+   |                                                                                                 |
+   |         4. initiate 'task_struct->ctx=0', in function 'exec_mmap', in file '/fs/exec.c';        |
+   |                                                                                                 |
+   |         ----refer to statm implementation----                                                   |
+   |         5. define 'proc_pid_ctx', in file '/fs/proc/internal.h';                                |
+   |                                                                                                 |
+   |         6. search for 'statm' and implement as the same, in file 'fs/proc/base.c'.              |
+   |                                                                                                 |
+   |         ----remake the kernel----                                                               |
+   |         1. make clean                                                                           |
+   |         2. make mrproper                                                                        |
+   |         3. make oldconfig                                                                       |
+   |         4. make                                                                                 |
+   |         5. make modules_install                                                                 |
+   |         6. make install                                                                         |
+   |                                                                                                 |
+   |-------------------------------------------------------------------------------------------------|
+
+
+
+
+
